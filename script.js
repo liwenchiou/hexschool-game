@@ -75,6 +75,49 @@ const levels = [
     }
 ];
 
+const abbreviations = {
+    'df': 'display: flex;',
+    'jc': 'justify-content: ',
+    'jcfs': 'justify-content: flex-start;',
+    'jcc': 'justify-content: center;',
+    'jcfe': 'justify-content: flex-end;',
+    'jcsb': 'justify-content: space-between;',
+    'jcsa': 'justify-content: space-around;',
+    'jcse': 'justify-content: space-evenly;',
+    'ai': 'align-items: ',
+    'aifs': 'align-items: flex-start;',
+    'aic': 'align-items: center;',
+    'aife': 'align-items: flex-end;',
+    'fd': 'flex-direction: ',
+    'fdr': 'flex-direction: row;',
+    'fdc': 'flex-direction: column;',
+    'fxdc': 'flex-direction: column;',
+    'fxdr': 'flex-direction: row;',
+    'fw': 'flex-wrap: ',
+    'fww': 'flex-wrap: wrap;',
+    'fwnw': 'flex-wrap: nowrap;'
+};
+
+function expandAbbreviation(textarea) {
+    const start = textarea.selectionStart;
+    const text = textarea.value.substring(0, start);
+    
+    // Find the last word before the cursor (only alphabetic characters)
+    const match = text.match(/([a-zA-Z]+)$/);
+    if (!match) return false;
+    
+    const word = match[1].toLowerCase();
+    const replacement = abbreviations[word];
+    if (replacement) {
+        const wordStart = start - word.length;
+        textarea.value = textarea.value.substring(0, wordStart) + replacement + textarea.value.substring(start);
+        textarea.selectionStart = textarea.selectionEnd = wordStart + replacement.length;
+        handleInput();
+        return true;
+    }
+    return false;
+}
+
 
 
 let currentLevel = parseInt(localStorage.getItem('flexTokyoLevel')) || 0;
@@ -158,14 +201,25 @@ function initGame() {
         loadLevel(currentLevel);
     });
 
-    // Add tab key support for textarea
+    // Add tab and enter key support for textarea (including Emmet abbreviations)
     dom.cssInput.addEventListener('keydown', function(e) {
         if (e.key === 'Tab') {
             e.preventDefault();
+            // Try to expand Emmet abbreviation first
+            if (expandAbbreviation(this)) {
+                return;
+            }
+            // Otherwise, insert 2 spaces for tab
             const start = this.selectionStart;
             const end = this.selectionEnd;
             this.value = this.value.substring(0, start) + "  " + this.value.substring(end);
             this.selectionStart = this.selectionEnd = start + 2;
+            handleInput();
+        } else if (e.key === 'Enter') {
+            // Try to expand Emmet abbreviation on Enter
+            if (expandAbbreviation(this)) {
+                e.preventDefault();
+            }
         }
     });
 
