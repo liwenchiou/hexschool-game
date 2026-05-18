@@ -1,0 +1,723 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Noto+Serif+TC:wght@500;700&family=Fira+Code:wght@500;700&display=swap');
+
+:root {
+    --parchment-light: #f5ebe0;
+    --parchment-dark: #e6ccb2;
+    --ink-dark: #2c1a04;
+    --gold-accent: #b9935a;
+    --gold-hover: #d4af37;
+    --iron-dark: #1e140a;
+    --iron-border: #3d2c1d;
+    --velvet-red: #7c1a22;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Noto Serif TC', serif;
+    /* Simulated wooden plank table with radial torchlight */
+    background-color: #1e130c;
+    background-image: 
+        radial-gradient(circle at center, rgba(212, 175, 55, 0.08) 0%, rgba(0,0,0,0.85) 100%),
+        repeating-linear-gradient(90deg, #1e130c, #1e130c 80px, #180f0a 82px, #180f0a 84px);
+    box-shadow: inset 0 0 150px rgba(0,0,0,0.9);
+    color: var(--ink-dark);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Ambient torchlight flicker */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    animation: flicker 4s infinite alternate;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.9; }
+}
+
+.app-container {
+    display: flex;
+    width: 95vw;
+    height: 90vh;
+    max-width: 1400px;
+    gap: 2.5rem;
+    position: relative;
+    z-index: 10;
+}
+
+/* Sidebar - Antique Parchment Scroll */
+.sidebar {
+    width: 430px;
+    height: 100%;
+    background-color: var(--parchment-light);
+    background-image: radial-gradient(rgba(0,0,0,0.02) 1px, transparent 0);
+    background-size: 8px 8px;
+    border: 3px double var(--iron-border);
+    outline: 8px solid var(--parchment-light);
+    border-radius: 4px;
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(139, 90, 43, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-scrollable {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding-right: 6px;
+}
+
+/* Custom Scrollbar */
+.sidebar-scrollable::-webkit-scrollbar {
+    width: 6px;
+}
+.sidebar-scrollable::-webkit-scrollbar-track {
+    background: rgba(44, 26, 4, 0.05);
+    border-radius: 3px;
+}
+.sidebar-scrollable::-webkit-scrollbar-thumb {
+    background: var(--gold-accent);
+    border-radius: 3px;
+}
+.sidebar-scrollable::-webkit-scrollbar-thumb:hover {
+    background: var(--velvet-red);
+}
+
+/* Corner flourishes for parchment scroll */
+.sidebar::before {
+    content: '⚜';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    color: var(--gold-accent);
+    font-size: 1.2rem;
+}
+
+header h1 {
+    font-family: 'Cinzel', 'Noto Serif TC', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--velvet-red);
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+    margin-bottom: 0.5rem;
+    text-align: center;
+    border-bottom: 2px solid var(--gold-accent);
+    padding-bottom: 10px;
+}
+
+.level-indicator {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: #fff;
+    font-weight: 700;
+    background: var(--velvet-red);
+    padding: 4px 14px;
+    border-radius: 0;
+    display: inline-block;
+    letter-spacing: 2px;
+    border: 1px solid var(--gold-accent);
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+.instructions {
+    flex-shrink: 0;
+}
+
+.instructions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px dashed var(--gold-accent);
+    padding-bottom: 6px;
+    margin-bottom: 0.8rem;
+}
+
+.instructions h2 {
+    font-family: 'Cinzel', 'Noto Serif TC', serif;
+    font-size: 1.15rem;
+    color: var(--ink-dark);
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.hint-btn {
+    background: var(--parchment-dark);
+    color: var(--ink-dark);
+    border: 1px solid var(--iron-border);
+    padding: 3px 10px;
+    font-size: 0.82rem;
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.hint-btn:hover {
+    background: var(--velvet-red);
+    color: #fff;
+    border-color: var(--gold-accent);
+}
+
+.hint-btn:active {
+    transform: translateY(1px);
+}
+
+.hint-box {
+    margin-top: 1rem;
+    background: rgba(185, 147, 90, 0.15);
+    border: 1px dashed var(--gold-accent);
+    border-radius: 4px;
+    padding: 0.8rem;
+    font-size: 0.95rem;
+    color: var(--ink-dark);
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease;
+    font-weight: 500;
+}
+
+.hint-box.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.instructions p {
+    color: var(--ink-dark);
+    line-height: 1.6;
+    font-size: 0.98rem;
+    font-weight: 500;
+}
+
+code {
+    background: rgba(139, 90, 43, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--velvet-red);
+    font-family: 'Fira Code', monospace;
+    font-weight: 700;
+    border: 1px solid rgba(139, 90, 43, 0.2);
+}
+
+/* Editor - Styled as an Old Spell Scroll Paper (High Contrast & Clear) */
+.editor {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #f7eedb;
+    background-image: radial-gradient(rgba(0,0,0,0.02) 1px, transparent 0);
+    background-size: 8px 8px;
+    border-radius: 4px;
+    border: 3px solid var(--iron-border);
+    box-shadow: inset 0 0 25px rgba(139, 90, 43, 0.35), 0 10px 20px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.editor-header {
+    background: #e6ccb2;
+    padding: 0.7rem 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--iron-border);
+}
+
+.quick-inputs {
+    background: #eedcb5;
+    padding: 0.6rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-bottom: 2px dashed rgba(44, 26, 4, 0.2);
+}
+
+.quick-inputs.collapsed {
+    display: none !important;
+}
+
+.quick-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
+.quick-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--ink-dark);
+    font-family: 'Noto Serif TC', serif;
+}
+
+.quick-btn {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: var(--parchment-light);
+    color: var(--ink-dark);
+    border: 1px solid var(--gold-accent);
+    padding: 3px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.2s;
+}
+
+.quick-btn:hover {
+    background: var(--velvet-red);
+    color: #fff;
+    border-color: var(--gold-accent);
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
+    transform: translateY(-1px);
+}
+
+.quick-btn:active {
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+/* Hide modern macOS dots */
+.dot {
+    display: none;
+}
+
+.filename {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    color: var(--ink-dark);
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-left: 0;
+}
+
+/* Medieval toggle button for quick inputs */
+.toggle-quick-btn {
+    background: var(--parchment-light);
+    color: var(--ink-dark);
+    border: 1px solid var(--iron-border);
+    padding: 2px 8px;
+    font-size: 0.8rem;
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    transition: all 0.2s;
+    user-select: none;
+    border-radius: 3px;
+}
+
+.toggle-quick-btn:hover {
+    background: var(--velvet-red);
+    color: #fff;
+    border-color: var(--gold-accent);
+}
+
+.toggle-quick-btn:active {
+    transform: translateY(1px);
+}
+
+.code-area {
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Fira Code', monospace;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--ink-dark); /* Readable ink */
+}
+
+pre {
+    color: #6d543e; /* Clear dark brown/grey code text */
+    margin: 0;
+    font-weight: 700;
+}
+
+textarea {
+    background: transparent;
+    border: none;
+    color: var(--velvet-red); /* Active magic ink in deep crimson */
+    font-family: 'Fira Code', monospace;
+    font-size: 1.05rem;
+    font-weight: 700;
+    resize: none;
+    outline: none;
+    margin-left: 1.2rem;
+    width: calc(100% - 1.2rem);
+    height: 90px; /* Prevent collapsing, ensure stable typing box */
+    margin: 0.4rem 0;
+    line-height: 1.6;
+    border-left: 2px solid rgba(124, 26, 34, 0.15);
+    padding-left: 10px;
+}
+
+textarea::placeholder {
+    color: #a8947c;
+    font-style: italic;
+}
+
+/* Cast Iron Wax Stamp Button */
+.btn {
+    padding: 0.8rem;
+    font-family: 'Cinzel', 'Noto Serif TC', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    background: var(--velvet-red);
+    color: var(--parchment-light);
+    border: 2px solid var(--gold-accent);
+    border-radius: 0;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    transition: all 0.3s;
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+
+.primary-btn:hover:not(:disabled) {
+    background: #9c242c;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+.primary-btn:active:not(:disabled) {
+    transform: translateY(2px);
+}
+
+.primary-btn:disabled {
+    background: #3a2b22;
+    color: #614635;
+    border-color: #4a372b;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+/* Game Board - Rolled Out Ancient Leather Map Scroll */
+.game-board {
+    flex: 1;
+    position: relative;
+    border: 3px double var(--iron-border);
+    outline: 8px solid var(--iron-dark);
+    border-radius: 4px;
+    background-color: var(--parchment-dark);
+    background-image: 
+        radial-gradient(rgba(139, 90, 43, 0.18) 1.5px, transparent 0),
+        inset 0 0 70px rgba(0, 0, 0, 0.5);
+    background-size: 40px 40px, cover;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+}
+
+/* Scroll roller ornaments on top and bottom of the map */
+.game-board::before, .game-board::after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    right: -10px;
+    height: 14px;
+    background: #3a2512;
+    border: 2px solid var(--gold-accent);
+    border-radius: 7px;
+    z-index: 10;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.6);
+}
+.game-board::before { top: -10px; }
+.game-board::after { bottom: -10px; }
+
+.board-wrapper {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    right: 2rem;
+    bottom: 2rem;
+    background: rgba(139, 90, 43, 0.05);
+    border-radius: 0;
+    border: 2px dashed rgba(44, 26, 4, 0.3);
+    transition: all 0.3s ease;
+}
+
+.target-container, .play-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+}
+
+.target-container {
+    z-index: 1;
+}
+
+.play-container {
+    z-index: 2;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Tokens - Wax Seals and Runes */
+.item {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 42px;
+    position: relative;
+}
+
+.target-item {
+    background: rgba(0, 0, 0, 0.03);
+    border: 3px dashed rgba(44, 26, 4, 0.4);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    color: rgba(44, 26, 4, 0.45);
+    font-size: 0.85rem;
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 700;
+    text-align: center;
+    user-select: none;
+    line-height: 1.2;
+}
+
+/* Play Tokens - Royal Wax Seal */
+.play-item {
+    background: var(--velvet-red);
+    background-image: radial-gradient(circle, #99232c 0%, var(--velvet-red) 70%);
+    border: 2px solid var(--gold-accent);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.4);
+    position: relative;
+}
+
+.play-item::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Map Success Highlights */
+.success-anim {
+    border-color: var(--gold-accent);
+    background: rgba(212, 175, 55, 0.05);
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.2);
+}
+
+/* Animations for emoji pop */
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    80% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Modal Styling - Medieval Parchment Quest Scroll */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background-color: var(--parchment-light);
+    border: 3px double var(--iron-border);
+    outline: 8px solid var(--parchment-light);
+    border-radius: 4px;
+    width: 90%;
+    max-width: 650px;
+    padding: 2.5rem;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.9), inset 0 0 50px rgba(139, 90, 43, 0.25);
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.modal-overlay.visible .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--gold-accent);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-header h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--velvet-red);
+}
+
+.close-btn {
+    font-size: 1.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--ink-dark);
+    transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+    color: var(--velvet-red);
+}
+
+.modal-body h3 {
+    font-family: 'Cinzel', 'Noto Serif TC', serif;
+    font-size: 1.2rem;
+    color: var(--ink-dark);
+    margin-bottom: 1rem;
+    font-weight: 700;
+    border-left: 4px solid var(--velvet-red);
+    padding-left: 10px;
+}
+
+.modal-body p {
+    color: var(--ink-dark);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.teaser-features {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.feature-card {
+    background: rgba(139, 90, 43, 0.05);
+    border: 1px solid rgba(44, 26, 4, 0.15);
+    border-radius: 4px;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.feature-icon {
+    font-size: 2rem;
+    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.1));
+}
+
+.feature-card h4 {
+    font-family: 'Cinzel', 'Noto Serif TC', serif;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--velvet-red);
+    margin-bottom: 0.25rem;
+}
+
+.feature-card p {
+    font-size: 0.95rem;
+    margin-bottom: 0;
+    color: var(--ink-dark);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.link-btn {
+    text-decoration: none;
+    text-align: center;
+    flex: 1;
+    display: inline-block;
+    padding: 0.8rem;
+    font-family: 'Cinzel', 'Noto Serif TC', serif;
+    font-weight: 700;
+    border: 2px solid var(--gold-accent);
+    background: var(--velvet-red);
+    color: var(--parchment-light);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+}
+
+.link-btn:hover {
+    background: #9c242c;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+    transform: translateY(-2px);
+}
+
+.link-btn.secondary {
+    border-color: var(--iron-border);
+    color: var(--ink-dark);
+    background: var(--parchment-dark);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.link-btn.secondary:hover {
+    background: #dac0a3;
+    color: var(--ink-dark);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.coming-soon-notice {
+    text-align: center;
+    background: rgba(185, 147, 90, 0.1);
+    border: 1px dashed var(--gold-accent);
+    padding: 1rem;
+    font-family: 'Cinzel', 'Noto Serif TC', serif;
+    font-weight: 700;
+    color: var(--velvet-red);
+    border-radius: 4px;
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+    line-height: 1.5;
+}

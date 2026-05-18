@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《JS 核心重構：勇者轉職傳說》- 前導修煉</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar: Instructions & Editor -->
+        <aside class="sidebar glass-panel">
+            <header>
+                <h1>勇者轉職：Flexbox 修煉 ⚔️</h1>
+                <div class="level-indicator">Level <span id="current-level">1</span> of <span id="total-levels">5</span></div>
+            </header>
+            
+            <div class="sidebar-scrollable">
+                <section class="instructions">
+                    <div class="instructions-header">
+                        <h2 id="level-title">任務目標</h2>
+                        <button id="hint-btn" class="hint-btn">💡 導師提示</button>
+                    </div>
+                    <p id="level-desc">請輸入 CSS 屬性，協助勇者們完成轉職修煉！</p>
+                    <div id="hint-box" class="hint-box hidden"></div>
+                </section>
+
+                <section class="editor">
+                    <div class="editor-header">
+                        <span class="filename">style.css</span>
+                        <button id="toggle-quick-btn" class="toggle-quick-btn">🔮 快捷符文 (展開)</button>
+                    </div>
+                    <div class="quick-inputs collapsed">
+                        <div class="quick-group">
+                            <span class="quick-label">🔮 屬性：</span>
+                            <span class="quick-btn" data-insert="justify-content: ">justify-content</span>
+                            <span class="quick-btn" data-insert="align-items: ">align-items</span>
+                            <span class="quick-btn" data-insert="flex-direction: ">flex-direction</span>
+                            <span class="quick-btn" data-insert="flex-wrap: ">flex-wrap</span>
+                        </div>
+                        <div class="quick-group">
+                            <span class="quick-label">🛡️ 數值：</span>
+                            <span class="quick-btn" data-insert="flex-start;">flex-start</span>
+                            <span class="quick-btn" data-insert="flex-end;">flex-end</span>
+                            <span class="quick-btn" data-insert="center;">center</span>
+                            <span class="quick-btn" data-insert="space-between;">space-between</span>
+                            <span class="quick-btn" data-insert="space-around;">space-around</span>
+                            <span class="quick-btn" data-insert="column;">column</span>
+                            <span class="quick-btn" data-insert="wrap;">wrap</span>
+                        </div>
+                    </div>
+                    <div class="code-area">
+                        <pre><code>.container {
+  display: flex;</code></pre>
+                        <textarea id="css-input" rows="3" placeholder="/* 輸入 CSS 屬性 */" autofocus></textarea>
+                        <pre><code>}</code></pre>
+                    </div>
+                </section>
+            </div>
+            
+            <button id="next-btn" class="btn primary-btn" disabled>前往下一關 ✨</button>
+        </aside>
+
+        <!-- Main: Game Board -->
+        <main class="game-board">
+            <div class="board-wrapper">
+                <!-- Target Area (Reference) -->
+                <div id="target-container" class="target-container">
+                    <!-- Target items will be generated here -->
+                </div>
+                <!-- Play Area (Interactive) -->
+                <div id="play-container" class="play-container">
+                    <!-- Playable items will be generated here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JS-Core-Remaster Teaser Modal -->
+    <div id="teaser-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏆 恭喜完成勇者修煉！</h2>
+                <span class="close-btn" id="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <h3>⚔️ 《JS 核心重構：勇者轉職傳說》即將登場！</h3>
+                <p>你已成功掌握了 Flexbox 基礎！但要成為真正的傳奇勇者，JavaScript 核心的考驗才正要開始...</p>
+                
+                <div class="teaser-features">
+                    <div class="feature-card">
+                        <span class="feature-icon">🗺️</span>
+                        <div>
+                            <h4>30 天 RPG 冒險里程碑</h4>
+                            <p>五大賽段從整潔術、資料流到瀏覽器機制，全面重構你的 JS 原力！</p>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🛡️</span>
+                        <div>
+                            <h4>三大傳奇公會成員同行</h4>
+                            <p>✨ 敬請期待！伴你同行的神祕公會成員，將於 7-8 月鐵人賽揭幕時隆重揭曉！</p>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🗡️</span>
+                        <div>
+                            <h4>CodePen 實戰演武場</h4>
+                            <p>拒絕紙上談兵！每日專屬 CodePen 練習，用手感把底層原理練成肌肉記憶！</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="coming-soon-notice">
+                    ✨ 傳說級修煉系統將於 7-8 月鐵人賽隆重登場，敬請期待！ ✨
+                </div>
+                
+                <div class="modal-actions">
+                    <button id="restart-btn" class="link-btn" style="cursor: pointer; width: 100%; border: 2px solid var(--gold-accent);">⚔️ 重新開始修煉 (回到第一關)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
